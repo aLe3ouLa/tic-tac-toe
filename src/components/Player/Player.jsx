@@ -33,6 +33,7 @@ const Wins = styled.p`
   color: #fbd04e;
   background-color: white;
   border-radius: 20px;
+  font-weight: bold;
 `;
 
 function Player({ name, symbol, wins }) {
