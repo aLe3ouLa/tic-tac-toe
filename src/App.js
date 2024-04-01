@@ -22,13 +22,24 @@ const Container = styled.div`
   gap: 60px;
 `;
 
+const Players = [{
+  name: 'Player 1', 
+  symbol: 'X',
+  wins: 0
+}, 
+{
+  name: 'Player 2', 
+  symbol: 'O',
+  wins: 0
+}]
+
 function App() {
   return (
     <Wrapper className="App">
       <Container>
-        <Player name="Player 1" symbol="X" wins={1} />
+        <Player { ...Players[0]} />
         <Board />
-        <Player name="Player 2" symbol="O" wins={2} />
+        <Player { ...Players[1]} />
       </Container>
     </Wrapper>
   );
