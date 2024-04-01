@@ -16,13 +16,8 @@ const BoxContainer = styled.div`
 `;
 
 export default function Box({ currentState, onClick, isWinning }) {
-
-  const handleClick = () => {
-    onClick();
-  };
-
   return (
-    <BoxContainer isWinning={isWinning} onClick={handleClick}>
+    <BoxContainer isWinning={isWinning} onClick={onClick}>
       {displayPlayerSymbol(currentState)}
     </BoxContainer>
   );
