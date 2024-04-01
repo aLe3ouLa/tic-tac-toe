@@ -1,8 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { WINNING_COMBINATIONS } from "../../WINNING_STATES";
 import ActionBar from "../ActionBar/ActionBar";
 import Box from "../Box";
+import { checkForWinner } from "../../utils/checkForWinner";
+import { isThisTheWinningCombo } from "../../utils/isThisTheWinningCombo";
 
 const INITIAL = [
   [undefined, undefined, undefined],
@@ -33,23 +34,7 @@ export default function Board() {
     setBoard(INITIAL);
   };
 
-  let winner;
-  let winningCombo;
-
-  for (const combination of WINNING_COMBINATIONS) {
-    const firstSymbol = board[combination[0].row][combination[0].column];
-    const secondSymbol = board[combination[1].row][combination[1].column];
-    const thirdSymbol = board[combination[2].row][combination[2].column];
-
-    if (
-      firstSymbol &&
-      firstSymbol === secondSymbol &&
-      firstSymbol === thirdSymbol
-    ) {
-      winner = firstSymbol;
-      winningCombo = combination;
-    }
-  }
+ const { winner, winningCombo} = checkForWinner(board)
 
   const hasDraw =
     !winner && board.every((row) => row.every((val) => val !== undefined));
@@ -67,24 +52,7 @@ export default function Board() {
                 const newState = board[value1][value2];
                 const current = [value1, value2];
 
-                let firstSymbol;
-                let secondSymbol;
-                let thirdSymbol;
-                if (winningCombo !== undefined) {
-                  firstSymbol = [winningCombo?.[0].row, winningCombo?.[0].column];
-                  secondSymbol = [winningCombo?.[1].row, winningCombo?.[1].column];
-                  thirdSymbol = [winningCombo?.[2].row, winningCombo?.[2].column];
-                }
-
-                
-                const hasSymbols = firstSymbol && secondSymbol && thirdSymbol
-                const isWinning = hasSymbols && (
-                  (firstSymbol[0] === current[0] &&
-                    firstSymbol[1] === current[1]) ||
-                  (secondSymbol[0] === current[0] &&
-                    secondSymbol[1] === current[1]) ||
-                  (thirdSymbol[0] === current[0] &&
-                    thirdSymbol[1] === current[1]));
+                const isWinning = isThisTheWinningCombo(current, winningCombo)
 
                 return (
                   <Box
